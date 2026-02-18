@@ -6,9 +6,9 @@ A scalable, production-ready Ad Tech backend API system designed to serve big te
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    API Gateway (Spring Cloud Gateway)        │
-│                    - Routing & Load Balancing                │
-│                    - Authentication & Authorization           │
+│                    API Gateway (Spring Cloud Gateway)       │
+│                    - Routing & Load Balancing               │
+│                    - Authentication & Authorization         │
 └──────────────────────┬──────────────────────────────────────┘
                        │
         ┌──────────────┼──────────────┐
@@ -18,11 +18,11 @@ A scalable, production-ready Ad Tech backend API system designed to serve big te
 │   Service    │ │  Serving  │ │  Service   │
 │              │ │  Service  │ │            │
 └───────┬──────┘ └────┬──────┘ └─────┬──────┘
-        │              │              │
-        └──────────────┼──────────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
+        │             │              │
+        └─────────────┼──────────────┘
+                      │
+        ┌─────────────┼──────────────┐
+        │             │              │
 ┌───────▼──────┐ ┌────▼──────┐ ┌─────▼──────┐
 │    User      │ │  Kafka    │ │  Database  │
 │  Targeting   │ │  Message  │ │  Layer     │
