@@ -5,14 +5,14 @@ A scalable, production-ready Ad Tech backend API system designed to serve big te
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    API Gateway (Spring Cloud Gateway)       │
-│                    - Routing & Load Balancing               │
-│                    - Authentication & Authorization         │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
+┌────────────────────────────────────────────────────────────┐
+│               API Gateway (Spring Cloud Gateway)           │
+│                 - Routing & Load Balancing                 │
+│                 - Authentication & Authorization           │ 
+└─────────────────────┬──────────────────────────────────────┘
+                      │
+        ┌─────────────┼──────────────┐
+        │             │              │
 ┌───────▼──────┐ ┌────▼──────┐ ┌─────▼──────┐
 │   Campaign   │ │   Ad      │ │  Analytics │
 │   Service    │ │  Serving  │ │  Service   │
