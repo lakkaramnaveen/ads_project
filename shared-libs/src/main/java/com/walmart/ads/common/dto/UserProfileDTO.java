@@ -14,8 +14,8 @@ public class UserProfileDTO {
     private String location;
     private List<String> interests;
     private List<String> segments; // User segments for targeting
-    private Map<String, Object> demographics;
-    private Map<String, Object> behaviorData; // Browsing history, purchase history
+    private Map<String, String> demographics;
+    private Map<String, String> behaviorData; // Browsing history, purchase history
     private LocalDateTime lastUpdated;
 
     public UserProfileDTO() {}
@@ -30,8 +30,8 @@ public class UserProfileDTO {
             String location,
             List<String> interests,
             List<String> segments,
-            Map<String, Object> demographics,
-            Map<String, Object> behaviorData,
+            Map<String, String> demographics,
+            Map<String, String> behaviorData,
             LocalDateTime lastUpdated
     ) {
         this.userId = userId;
@@ -120,19 +120,19 @@ public class UserProfileDTO {
         this.segments = segments;
     }
 
-    public Map<String, Object> getDemographics() {
+    public Map<String, String> getDemographics() {
         return demographics;
     }
 
-    public void setDemographics(Map<String, Object> demographics) {
+    public void setDemographics(Map<String, String> demographics) {
         this.demographics = demographics;
     }
 
-    public Map<String, Object> getBehaviorData() {
+    public Map<String, String> getBehaviorData() {
         return behaviorData;
     }
 
-    public void setBehaviorData(Map<String, Object> behaviorData) {
+    public void setBehaviorData(Map<String, String> behaviorData) {
         this.behaviorData = behaviorData;
     }
 

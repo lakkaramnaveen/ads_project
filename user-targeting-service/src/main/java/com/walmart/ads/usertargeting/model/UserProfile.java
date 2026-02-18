@@ -1,5 +1,6 @@
 package com.walmart.ads.usertargeting.model;
 
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -9,18 +10,22 @@ import java.util.Map;
 
 @Table("user_profiles")
 public class UserProfile {
-    @PrimaryKey
+    @PrimaryKey("user_id")
     private String userId;
     private String email;
+    @Column("first_name")
     private String firstName;
+    @Column("last_name")
     private String lastName;
     private Integer age;
     private String gender;
     private String location;
     private List<String> interests;
     private List<String> segments; // User segments for targeting
-    private Map<String, Object> demographics;
-    private Map<String, Object> behaviorData; // Browsing history, purchase history
+    private Map<String, String> demographics;
+    @Column("behavior_data")
+    private Map<String, String> behaviorData; // Browsing history, purchase history
+    @Column("last_updated")
     private LocalDateTime lastUpdated;
 
     public UserProfile() {}
@@ -35,8 +40,8 @@ public class UserProfile {
             String location,
             List<String> interests,
             List<String> segments,
-            Map<String, Object> demographics,
-            Map<String, Object> behaviorData,
+            Map<String, String> demographics,
+            Map<String, String> behaviorData,
             LocalDateTime lastUpdated
     ) {
         this.userId = userId;
@@ -125,19 +130,19 @@ public class UserProfile {
         this.segments = segments;
     }
 
-    public Map<String, Object> getDemographics() {
+    public Map<String, String> getDemographics() {
         return demographics;
     }
 
-    public void setDemographics(Map<String, Object> demographics) {
+    public void setDemographics(Map<String, String> demographics) {
         this.demographics = demographics;
     }
 
-    public Map<String, Object> getBehaviorData() {
+    public Map<String, String> getBehaviorData() {
         return behaviorData;
     }
 
-    public void setBehaviorData(Map<String, Object> behaviorData) {
+    public void setBehaviorData(Map<String, String> behaviorData) {
         this.behaviorData = behaviorData;
     }
 

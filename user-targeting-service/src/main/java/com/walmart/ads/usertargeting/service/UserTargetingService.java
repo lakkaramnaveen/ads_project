@@ -1,6 +1,7 @@
 package com.walmart.ads.usertargeting.service;
 
 import com.walmart.ads.common.dto.UserProfileDTO;
+import com.walmart.ads.usertargeting.exception.UserProfileNotFoundException;
 import com.walmart.ads.usertargeting.model.UserProfile;
 import com.walmart.ads.usertargeting.repository.UserProfileRepository;
 import org.slf4j.Logger;
@@ -25,16 +26,16 @@ public class UserTargetingService {
         this.userProfileRepository = userProfileRepository;
     }
 
-    @Cacheable(value = "userProfiles", key = "#userId")
+    @Cacheable(value = "userProfiles", key = "#root.args[0]")
     public UserProfileDTO getUserProfile(String userId) {
         UserProfile profile = userProfileRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User profile not found: " + userId));
+                .orElseThrow(() -> new UserProfileNotFoundException(userId));
         return convertToDTO(profile);
     }
     
     public List<String> getUserSegments(String userId) {
         UserProfile profile = userProfileRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User profile not found: " + userId));
+                .orElseThrow(() -> new UserProfileNotFoundException(userId));
         return profile.getSegments() != null ? profile.getSegments() : new ArrayList<>();
     }
     

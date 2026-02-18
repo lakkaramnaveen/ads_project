@@ -20,20 +20,20 @@ public class UserTargetingController {
     }
     
     @GetMapping("/{userId}/profile")
-    public ResponseEntity<ApiResponse<UserProfileDTO>> getUserProfile(@PathVariable String userId) {
+    public ResponseEntity<ApiResponse<UserProfileDTO>> getUserProfile(@PathVariable("userId") String userId) {
         UserProfileDTO profile = userTargetingService.getUserProfile(userId);
         return ResponseEntity.ok(ApiResponse.success(profile));
     }
     
     @GetMapping("/{userId}/segments")
-    public ResponseEntity<ApiResponse<List<String>>> getUserSegments(@PathVariable String userId) {
+    public ResponseEntity<ApiResponse<List<String>>> getUserSegments(@PathVariable("userId") String userId) {
         List<String> segments = userTargetingService.getUserSegments(userId);
         return ResponseEntity.ok(ApiResponse.success(segments));
     }
     
     @PutMapping("/{userId}/profile")
     public ResponseEntity<ApiResponse<UserProfileDTO>> updateUserProfile(
-            @PathVariable String userId,
+            @PathVariable("userId") String userId,
             @Valid @RequestBody UserProfileDTO profileDTO) {
         UserProfileDTO updated = userTargetingService.updateUserProfile(userId, profileDTO);
         return ResponseEntity.ok(ApiResponse.success("User profile updated successfully", updated));

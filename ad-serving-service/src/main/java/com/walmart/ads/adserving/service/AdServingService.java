@@ -98,7 +98,7 @@ public class AdServingService {
         return campaignServiceClient.getActiveCampaigns();
     }
     
-    @Cacheable(value = "userProfiles", key = "#userId")
+    @Cacheable(value = "userProfiles", key = "#root.args[0]")
     private UserProfileDTO getUserProfile(String userId) {
         try {
             return userTargetingServiceClient.getUserProfile(userId);

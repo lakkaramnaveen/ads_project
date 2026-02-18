@@ -28,7 +28,7 @@ public class CampaignController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<CampaignDTO>> getCampaign(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<CampaignDTO>> getCampaign(@PathVariable("id") Long id) {
         CampaignDTO campaign = campaignService.getCampaignById(id);
         return ResponseEntity.ok(ApiResponse.success(campaign));
     }
@@ -53,14 +53,14 @@ public class CampaignController {
     
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<CampaignDTO>> updateCampaign(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @Valid @RequestBody CampaignDTO campaignDTO) {
         CampaignDTO updated = campaignService.updateCampaign(id, campaignDTO);
         return ResponseEntity.ok(ApiResponse.success("Campaign updated successfully", updated));
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteCampaign(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteCampaign(@PathVariable("id") Long id) {
         campaignService.deleteCampaign(id);
         return ResponseEntity.ok(ApiResponse.success("Campaign deleted successfully", null));
     }
