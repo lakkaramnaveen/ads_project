@@ -1,17 +1,11 @@
 package com.walmart.ads.common.dto;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CampaignDTO {
     private Long id;
     
@@ -42,7 +36,143 @@ public class CampaignDTO {
     
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
+
+    public CampaignDTO() {}
+
+    public CampaignDTO(
+            Long id,
+            String name,
+            String advertiserId,
+            BigDecimal budget,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            CampaignStatus status,
+            List<String> targetSegments,
+            List<String> targetGeographies,
+            String creativeUrl,
+            String landingPageUrl,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+    ) {
+        this.id = id;
+        this.name = name;
+        this.advertiserId = advertiserId;
+        this.budget = budget;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.targetSegments = targetSegments;
+        this.targetGeographies = targetGeographies;
+        this.creativeUrl = creativeUrl;
+        this.landingPageUrl = landingPageUrl;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAdvertiserId() {
+        return advertiserId;
+    }
+
+    public void setAdvertiserId(String advertiserId) {
+        this.advertiserId = advertiserId;
+    }
+
+    public BigDecimal getBudget() {
+        return budget;
+    }
+
+    public void setBudget(BigDecimal budget) {
+        this.budget = budget;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public CampaignStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(CampaignStatus status) {
+        this.status = status;
+    }
+
+    public List<String> getTargetSegments() {
+        return targetSegments;
+    }
+
+    public void setTargetSegments(List<String> targetSegments) {
+        this.targetSegments = targetSegments;
+    }
+
+    public List<String> getTargetGeographies() {
+        return targetGeographies;
+    }
+
+    public void setTargetGeographies(List<String> targetGeographies) {
+        this.targetGeographies = targetGeographies;
+    }
+
+    public String getCreativeUrl() {
+        return creativeUrl;
+    }
+
+    public void setCreativeUrl(String creativeUrl) {
+        this.creativeUrl = creativeUrl;
+    }
+
+    public String getLandingPageUrl() {
+        return landingPageUrl;
+    }
+
+    public void setLandingPageUrl(String landingPageUrl) {
+        this.landingPageUrl = landingPageUrl;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public enum CampaignStatus {
         DRAFT, ACTIVE, PAUSED, COMPLETED, ARCHIVED
     }

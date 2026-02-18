@@ -3,24 +3,27 @@ package com.walmart.ads.analytics.service;
 import com.walmart.ads.analytics.model.AnalyticsEvent;
 import com.walmart.ads.analytics.repository.AnalyticsEventRepository;
 import com.walmart.ads.common.dto.AnalyticsEventDTO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class AnalyticsService {
-    
+
+    private static final Logger log = LoggerFactory.getLogger(AnalyticsService.class);
+
     private final AnalyticsEventRepository eventRepository;
-    
+
+    public AnalyticsService(AnalyticsEventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
     @KafkaListener(topics = "analytics-events", groupId = "analytics-service")
     public void consumeAnalyticsEvent(Map<String, Object> eventData) {
         try {

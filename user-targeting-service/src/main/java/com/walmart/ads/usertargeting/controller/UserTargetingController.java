@@ -4,7 +4,6 @@ import com.walmart.ads.common.dto.ApiResponse;
 import com.walmart.ads.common.dto.UserProfileDTO;
 import com.walmart.ads.usertargeting.service.UserTargetingService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
 public class UserTargetingController {
     
     private final UserTargetingService userTargetingService;
+
+    public UserTargetingController(UserTargetingService userTargetingService) {
+        this.userTargetingService = userTargetingService;
+    }
     
     @GetMapping("/{userId}/profile")
     public ResponseEntity<ApiResponse<UserProfileDTO>> getUserProfile(@PathVariable String userId) {

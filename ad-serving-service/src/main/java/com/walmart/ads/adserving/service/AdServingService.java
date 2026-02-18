@@ -8,8 +8,8 @@ import com.walmart.ads.common.dto.AdRequestDTO;
 import com.walmart.ads.common.dto.AdResponseDTO;
 import com.walmart.ads.common.dto.CampaignDTO;
 import com.walmart.ads.common.dto.UserProfileDTO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -20,16 +20,28 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class AdServingService {
-    
+
+    private static final Logger log = LoggerFactory.getLogger(AdServingService.class);
+
     private final CampaignServiceClient campaignServiceClient;
     private final UserTargetingServiceClient userTargetingServiceClient;
     private final AdImpressionRepository impressionRepository;
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final Random random = new Random();
-    
+
+    public AdServingService(
+            CampaignServiceClient campaignServiceClient,
+            UserTargetingServiceClient userTargetingServiceClient,
+            AdImpressionRepository impressionRepository,
+            KafkaTemplate<String, Object> kafkaTemplate
+    ) {
+        this.campaignServiceClient = campaignServiceClient;
+        this.userTargetingServiceClient = userTargetingServiceClient;
+        this.impressionRepository = impressionRepository;
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
     /**
      * Core ad serving logic - optimized for low latency
      * This method handles 900M+ user requests and must be highly performant
@@ -164,6 +176,7 @@ public class AdServingService {
         try {
             // Publish to Kafka for analytics processing
             kafkaTemplate.send("analytics-events", eventType, Map.of(
+                    "eventType", eventType,
                     "adId", campaign.getId().toString(),
                     "campaignId", campaign.getId().toString(),
                     "userId", adRequest.getUserId(),

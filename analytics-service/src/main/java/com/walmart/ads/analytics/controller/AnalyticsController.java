@@ -4,7 +4,6 @@ import com.walmart.ads.analytics.service.AnalyticsService;
 import com.walmart.ads.common.dto.AnalyticsEventDTO;
 import com.walmart.ads.common.dto.ApiResponse;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +13,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/analytics")
-@RequiredArgsConstructor
 public class AnalyticsController {
     
     private final AnalyticsService analyticsService;
+
+    public AnalyticsController(AnalyticsService analyticsService) {
+        this.analyticsService = analyticsService;
+    }
     
     @PostMapping("/events")
     public ResponseEntity<ApiResponse<String>> trackEvent(@Valid @RequestBody AnalyticsEventDTO eventDTO) {

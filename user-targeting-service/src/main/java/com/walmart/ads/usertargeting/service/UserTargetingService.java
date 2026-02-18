@@ -3,8 +3,8 @@ package com.walmart.ads.usertargeting.service;
 import com.walmart.ads.common.dto.UserProfileDTO;
 import com.walmart.ads.usertargeting.model.UserProfile;
 import com.walmart.ads.usertargeting.repository.UserProfileRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,16 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
-@Slf4j
 public class UserTargetingService {
-    
+
+    private static final Logger log = LoggerFactory.getLogger(UserTargetingService.class);
+
     private final UserProfileRepository userProfileRepository;
-    
+
+    public UserTargetingService(UserProfileRepository userProfileRepository) {
+        this.userProfileRepository = userProfileRepository;
+    }
+
     @Cacheable(value = "userProfiles", key = "#userId")
     public UserProfileDTO getUserProfile(String userId) {
         UserProfile profile = userProfileRepository.findById(userId)

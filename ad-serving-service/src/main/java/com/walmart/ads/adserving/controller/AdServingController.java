@@ -5,18 +5,22 @@ import com.walmart.ads.common.dto.AdResponseDTO;
 import com.walmart.ads.common.dto.ApiResponse;
 import com.walmart.ads.adserving.service.AdServingService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/ads")
-@RequiredArgsConstructor
-@Slf4j
 public class AdServingController {
-    
+
+    private static final Logger log = LoggerFactory.getLogger(AdServingController.class);
+
     private final AdServingService adServingService;
+
+    public AdServingController(AdServingService adServingService) {
+        this.adServingService = adServingService;
+    }
     
     @PostMapping("/serve")
     public ResponseEntity<ApiResponse<AdResponseDTO>> serveAd(@Valid @RequestBody AdRequestDTO adRequest) {

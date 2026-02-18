@@ -1,42 +1,61 @@
 package com.walmart.ads.common.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ApiResponse<T> {
     private boolean success;
     private String message;
     private T data;
     private String errorCode;
-    
+
+    public ApiResponse() {}
+
+    public ApiResponse(boolean success, String message, T data, String errorCode) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
+        this.errorCode = errorCode;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
     public static <T> ApiResponse<T> success(T data) {
-        ApiResponse<T> r = new ApiResponse<>();
-        r.setSuccess(true);
-        r.setMessage("Success");
-        r.setData(data);
-        r.setErrorCode(null);
-        return r;
+        return new ApiResponse<>(true, "Success", data, null);
     }
     
     public static <T> ApiResponse<T> success(String message, T data) {
-        ApiResponse<T> r = new ApiResponse<>();
-        r.setSuccess(true);
-        r.setMessage(message);
-        r.setData(data);
-        r.setErrorCode(null);
-        return r;
+        return new ApiResponse<>(true, message, data, null);
     }
     
     public static <T> ApiResponse<T> error(String message, String errorCode) {
-        ApiResponse<T> r = new ApiResponse<>();
-        r.setSuccess(false);
-        r.setMessage(message);
-        r.setData(null);
-        r.setErrorCode(errorCode);
-        return r;
+        return new ApiResponse<>(false, message, null, errorCode);
     }
 }

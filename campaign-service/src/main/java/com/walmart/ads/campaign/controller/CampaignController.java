@@ -4,7 +4,6 @@ import com.walmart.ads.common.dto.ApiResponse;
 import com.walmart.ads.common.dto.CampaignDTO;
 import com.walmart.ads.campaign.service.CampaignService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/campaigns")
-@RequiredArgsConstructor
 public class CampaignController {
     
     private final CampaignService campaignService;
+
+    public CampaignController(CampaignService campaignService) {
+        this.campaignService = campaignService;
+    }
     
     @PostMapping
     public ResponseEntity<ApiResponse<CampaignDTO>> createCampaign(@Valid @RequestBody CampaignDTO campaignDTO) {
