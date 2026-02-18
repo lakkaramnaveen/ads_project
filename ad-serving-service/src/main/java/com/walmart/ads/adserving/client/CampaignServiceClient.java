@@ -13,5 +13,5 @@ public interface CampaignServiceClient {
     List<CampaignDTO> getActiveCampaigns();
     
     @GetMapping("/api/campaigns/{id}")
-    CampaignDTO getCampaign(@PathVariable Long id);
+    CampaignDTO getCampaign(@PathVariable("id") Long id);
 }

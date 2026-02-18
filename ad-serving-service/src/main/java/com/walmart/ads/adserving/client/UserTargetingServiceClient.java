@@ -10,8 +10,8 @@ import java.util.List;
 @FeignClient(name = "user-targeting-service")
 public interface UserTargetingServiceClient {
     @GetMapping("/api/users/{userId}/profile")
-    UserProfileDTO getUserProfile(@PathVariable String userId);
+    UserProfileDTO getUserProfile(@PathVariable("userId") String userId);
     
     @GetMapping("/api/users/{userId}/segments")
-    List<String> getUserSegments(@PathVariable String userId);
+    List<String> getUserSegments(@PathVariable("userId") String userId);
 }
