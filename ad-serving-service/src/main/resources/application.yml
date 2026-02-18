@@ -1,0 +1,47 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: ad-serving-service
+  data:
+    cassandra:
+      contact-points: localhost
+      port: 9042
+      keyspace-name: ads_keyspace
+      local-datacenter: datacenter1
+    redis:
+      host: localhost
+      port: 6379
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=10000,expireAfterWrite=5m
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Performance tuning for high-throughput ad serving
+server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 20
+  compression:
+    enabled: true

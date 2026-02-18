@@ -1,0 +1,89 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: campaign-service
+          uri: lb://campaign-service
+          predicates:
+            - Path=/api/campaigns/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: campaignCircuitBreaker
+                fallbackUri: forward:/fallback/campaign
+        
+        - id: ad-serving-service
+          uri: lb://ad-serving-service
+          predicates:
+            - Path=/api/ads/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: adServingCircuitBreaker
+                fallbackUri: forward:/fallback/ad
+        
+        - id: analytics-service
+          uri: lb://analytics-service
+          predicates:
+            - Path=/api/analytics/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: analyticsCircuitBreaker
+                fallbackUri: forward:/fallback/analytics
+        
+        - id: user-targeting-service
+          uri: lb://user-targeting-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: userTargetingCircuitBreaker
+                fallbackUri: forward:/fallback/user
+      
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway
+  endpoint:
+    health:
+      show-details: always
+
+# Rate limiting (can be configured per route)
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10

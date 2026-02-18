@@ -1,0 +1,35 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: user-targeting-service
+  data:
+    cassandra:
+      contact-points: localhost
+      port: 9042
+      keyspace-name: ads_keyspace
+      local-datacenter: datacenter1
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=50000,expireAfterWrite=10m
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: user-targeting-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
